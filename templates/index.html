@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GOLRANG</title>
+  </head>
+  <body>
+    <img src="https://www.pythonanywhere.com/user/ZeinabShabani/files/home/ZeinabShabani/mysite/templates/histogram.jpeg", style="folat:left; display:inline-block",  />
+    <table style="float:right; display: inline-block; margin-right:200px;margin-top:200px;">
+        <thead>
+            <tr>
+                <th>روز هفته</th>
+                <th>میانگین تقاضای روزانه</th>
+                <th>انحراف معیار تقاضای روزانه</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>شنبه</td>
+                <td>1660.38</td>
+                <td>514</td>
+            </tr>
+            <tr>
+            <td>یک‌شنبه</td>
+                <td>1628.76</td>
+                <td>424.83</td>
+            </tr>
+            <tr>
+                <td>دوشنبه</td>
+                <td>1676.92</td>
+                <td>439.08</td>
+            </tr>
+            <tr>
+                <td>سه‌شنبه</td>
+                <td>1584.88</td>
+                <td>406.83</td>
+            </tr>
+            <tr>
+                <td>چهارشنبه</td>
+                <td>1668.54</td>
+                <td>399.93</td>
+            </tr>
+            <tr>
+                <td>پنج‌شنبه</td>
+                <td>963.35</td>
+                <td>138.99</td>
+            </tr>
+            <tr>
+                <td>جمعه</td>
+                <td>945.38</td>
+                <td>86.92</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+      <input type="number" id="quantity" name="quantity" />
+      <button type="submit" onclick="myFunction()">Upload k</button>
+    </div>
+    <img id="image", src="", style = "float:right; display:inline-block; margin-right = 300px" />
+    <table id = 'table', style='float:left; margin-top=1800px'></table>
+
+
+
+    <script>
+        function sleep(milliseconds) {
+            const date = Date.now();
+            let currentDate = null;
+            do {
+                currentDate = Date.now();
+            } while (currentDate - date < milliseconds);
+        }
+
+        function secondtable(data){
+            var len =data.length
+            var txt = "<thead><tr><th>گروه مشتریان</th><th>Ave. R</th><th>Ave. F</th><th>Ave. M</th></tr></thead><tbody>"
+            data.forEach(function (item) {
+                txt += "<tr><td>"+item['customergroup']+"</td><td>"+item['AveR']+"</td><td>"+item['AveF']+"</td><td>"+item['AveM']+"</td></tr>"
+            })
+            txt += "</tbody>"
+
+            let table = document.getElementById("table")
+            table.innerHTML=txt
+            table.style = "float:left; display:inline-block;"
+
+        }
+
+        function myFunction() {
+            var k = document.getElementById("quantity").value;
+            var url = `http://zeinabshabani.pythonanywhere.com/stat/get_stat?k=${k}`;
+            fetch(url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                secondtable(data['scatterChartData'])
+            })
+            .catch(function (err) {
+                console.log("Fetch Error :-S", err);
+            });
+            sleep(15000)
+            let image = document.getElementById("image")
+            image.src ="https://www.pythonanywhere.com/user/ZeinabShabani/files/home/ZeinabShabani/mysite/templates/scatter.jpeg"
+        }
+    </script>
+  </body>
+</html>
