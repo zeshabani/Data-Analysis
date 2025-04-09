@@ -1,1 +1,1 @@
-A self learning project to analyze and represent some business insight using Golrang Company Data
+An independent project focused on analyzing and visualizing business insights using data from Golrang Company.
